@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmj.rabbitmq.mapper.ItemInfoMapper">
+
+    <resultMap id="Item_Info_Map" type="com.lmj.rabbitmq.entity.ItemInfo">
+        <id column="ITEM_ID" property="itemId"/>
+        <result column="CHANNEL_ID" property="channelId"/>
+        <result column="STORE_ID" property="storeId"/>
+        <result column="SOURCE_TYPE" property="sourceType"/>
+        <result column="CHANNEL_CATEGORY_ID" property="channelCategoryId"/>
+        <result column="SELLER_ITEM_ID" property="sellerItemId"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_ACCT_ID" property="createAcctId"/>
+        <result column="MOD_TIME" property="modTime"/>
+        <result column="MOD_ACCT_ID" property="modAcctId"/>
+    </resultMap>
+
+    <insert id="insertItemInfo" parameterType="com.lmj.rabbitmq.dto.ItemInfoDTO">
+        INSERT IN TO (CHANNEL_ID,STORE_ID,SOURCE_TYPE,CHANNEL_CATEGORY_ID,SELLER_ITEM_ID,CREATE_TIME,CREATE_ACCT_ID,MOD_TIME,MOD_ACCT_ID)
+        VALUES (#{channelId},#{storeId},#{sourceType},#{channelCategoryId},#{sellerItemId},#{createTime},#{createAcctId},#{modTime},#{modAcctId})
+    </insert>
+
+    <select id="selectInfoByType" parameterType="com.lmj.rabbitmq.dto.ItemInfoDTO" resultMap="Item_Info_Map">
+        SELECT
+          ITEM_ID,
+          CHANNEL_ID,
+          STORE_ID,
+          SOURCE_TYPE,
+          CHANNEL_CATEGORY_ID,
+          SELLER_ITEM_ID,
+          CREATE_TIME,
+          CREATE_ACCT_ID,
+          MOD_TIME,
+          MOD_ACCT_ID
+        FROM item_info WHERE ITEM_ID = #{itemId}
+    </select>
+
+    <delete id="deleteInfo" parameterType="com.lmj.rabbitmq.dto.ItemInfoDTO">
+        DELETE FROM item_info WHERE ITEM_ID = #{itemId}
+    </delete>
+
+    <update id="updateItemInfo" parameterType="com.lmj.rabbitmq.dto.ItemInfoDTO">
+        UPDATE item_info SET SOURCE_TYPE = #{sourceType} WHERE ITEM_ID = #{itemId}
+    </update>
+
+</mapper>
